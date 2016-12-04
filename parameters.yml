@@ -1,0 +1,35 @@
+headers:
+
+    required:
+        content_security_policy:
+            name: 'Content-Security-Policy'
+            values:
+        x_frame_options:
+            name: 'X-Frame-Options'
+            values:
+                - 'SAMEORIGIN'
+                - 'DENY'
+        x_xss_protection:
+            name: 'X-XSS-Protection'
+            values:
+                - '1; mode=block'
+    removed:
+      - 'ETag'
+      - 'X-Powered-By'
+
+content:
+    generatorName':
+        name: 'Generator name'
+        selector: '/html/head/meta[@name="generator"]/@content'
+    bitlyAppId:
+        name: 'Bitly application Id'
+        selector: '/html/head/meta[@name="bitly-verification"]/@content'
+    twitterAppId:
+        name: 'Twitter application Id'
+        selector: '/html/head/meta[@name="twitter:site"]/@content'
+    facebookAppId:
+        name: 'Facebook application Id'
+        selector: '/html/head/meta[@property="fb:admins"]/@content'
+    iphoneAppId:
+        name: 'iPhone application Id'
+        selector: '/html/head/meta[@name="twitter:app:id:iphone"]/@content'
