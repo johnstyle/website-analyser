@@ -7,6 +7,7 @@ import yaml
 import lib.prompt as prompt
 import lib.headers as headers
 import lib.content as content
+import lib.files as files
 
 args = sys.argv[1:]
 parametersFile = 'parameters.yml'
@@ -19,16 +20,19 @@ if not os.path.isfile(parametersFile):
     print('Veuillez creer le fichier de parametres')
     exit()
 
-config = yaml.load(file(parametersFile, 'r'))
-url = args[0]
+parameters = yaml.load(file(parametersFile, 'r'))
+parameters['url'] = args[0]
 
-prompt.title('Website : ' + url)
-request = requests.get(url)
+prompt.title('Website Analyser : ' + parameters['url'])
+request = requests.get(parameters['url'])
 
 prompt.subtitle('Headers')
-headers.find(config['headers'], request)
+headers.find(parameters['headers'], request)
 
 prompt.subtitle('Content')
-content.find(config['content'], request)
+content.find(parameters['content'], request)
+
+prompt.subtitle('Files')
+files.find(parameters)
 
 print('')

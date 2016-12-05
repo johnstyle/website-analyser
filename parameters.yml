@@ -14,8 +14,10 @@ headers:
             values:
                 - '1; mode=block'
     removed:
-      - 'ETag'
-      - 'X-Powered-By'
+        etag:
+            name: 'ETag'
+        x_powered_by:
+            name: 'X-Powered-By'
 
 content:
     generatorName':
@@ -33,3 +35,29 @@ content:
     iphoneAppId:
         name: 'iPhone application Id'
         selector: '/html/head/meta[@name="twitter:app:id:iphone"]/@content'
+
+files:
+    required:
+        - 'robots.txt'
+
+    removed:
+
+        - '.gitignore'
+
+        - 'LICENSE'
+        - 'LICENSE.md'
+        - 'README.md'
+
+        - 'docker-compose.yml'
+        - 'parameters.yml'
+        - 'settings.yml'
+        - 'config.yml'
+
+        - 'package.json'
+        - 'bower.json'
+        - 'composer.json'
+        - 'composer.lock'
+
+        - 'brunch-config.js'
+
+        - 'phpunit.xml'

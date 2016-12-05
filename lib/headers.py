@@ -18,8 +18,11 @@ def find(parameters, request):
         else:
             prompt.error(param['name'], None)
 
-    for param in parameters['removed']:
-        if param in headers:
-            prompt.error(param, headers[param])
+    for index in parameters['removed']:
+        param = parameters['removed'][index]
+        loname = param['name'].lower()
+        if loname in headers:
+            value = headers[loname]
+            prompt.error(param['name'], value)
         else:
-            prompt.text(param, None)
+            prompt.text(param['name'], None)

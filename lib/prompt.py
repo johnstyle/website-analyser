@@ -38,25 +38,25 @@ def text( name, value ):
     if value is None:
         value = '-'
     length = resultLength-len(name)
-    print(colors.GRAY + name + ' : ' + repeat(' ', length) + value + colors.ENDC)
+    print(colors.GRAY + name + repeat(' ', length) + value + colors.ENDC)
 
 def success( name, value ):
     if value is None:
         value = '-'
     length = resultLength-len(name)
-    print(colors.GREEN + name + ' : ' + repeat(' ', length) + value + colors.ENDC)
+    print(colors.GREEN + name + repeat(' ', length) + value + colors.ENDC)
 
 def warning( name, value ):
     if value is None:
         value = '-'
     length = resultLength-len(name)
-    print(colors.YELLOW + name + ' : ' + repeat(' ', length) + value + colors.ENDC)
+    print(colors.YELLOW + name + repeat(' ', length) + value + colors.ENDC)
 
 def error( name, value ):
     if value is None:
         value = '-'
     length = resultLength-len(name)
-    print(colors.RED + name + ' : ' + repeat(' ', length) + value + colors.ENDC)
+    print(colors.RED + name + repeat(' ', length) + value + colors.ENDC)
 
 def repeat(string, length):
    return (string * ((length/len(string))+1))[:length]

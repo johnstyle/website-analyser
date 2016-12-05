@@ -10,6 +10,3 @@ def find(parameters, request):
         value = tree.xpath(content['selector'])
         if value:
             prompt.text(content['name'], value[0])
-        else:
-            prompt.error(content['name'], None)
-
