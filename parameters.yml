@@ -1,63 +1,103 @@
 headers:
 
-    required:
-        content_security_policy:
-            name: 'Content-Security-Policy'
-            values:
-        x_frame_options:
-            name: 'X-Frame-Options'
-            values:
-                - 'SAMEORIGIN'
-                - 'DENY'
-        x_xss_protection:
-            name: 'X-XSS-Protection'
-            values:
-                - '1; mode=block'
-    removed:
-        etag:
-            name: 'ETag'
-        x_powered_by:
-            name: 'X-Powered-By'
+  required:
+
+    - { name: 'Content-Security-Policy', values: [] }
+    - { name: 'X-Frame-Options', values: ['SAMEORIGIN', 'DENY'] }
+    - { name: 'X-XSS-Protection', values: ['1; mode=block'] }
+
+  removed:
+
+    - { name: 'ETag' }
+    - { name: 'X-Powered-By' }
+    - { name: 'Server' }
 
 content:
-    generatorName':
-        name: 'Generator name'
-        selector: '/html/head/meta[@name="generator"]/@content'
-    bitlyAppId:
-        name: 'Bitly application Id'
-        selector: '/html/head/meta[@name="bitly-verification"]/@content'
-    twitterAppId:
-        name: 'Twitter application Id'
-        selector: '/html/head/meta[@name="twitter:site"]/@content'
-    facebookAppId:
-        name: 'Facebook application Id'
-        selector: '/html/head/meta[@property="fb:admins"]/@content'
-    iphoneAppId:
-        name: 'iPhone application Id'
-        selector: '/html/head/meta[@name="twitter:app:id:iphone"]/@content'
+
+  # Generator
+  - { name: 'Generator name', selector: '/html/head/meta[@name="generator"]/@content' }
+
+  # Email
+  -
+    name: 'Email'
+    regex: mailto:([^"'\s>]+)
+
+  # Phone
+  -
+    name: 'Phone'
+    regex: (?:callto|tel):([^"'\s>]+)
+
+  # Skype
+  -
+    name: 'Skype'
+    regex: skype:([^"'\s>]+)
+
+  # Bitly
+  - { name: 'Bitly application ID', selector: '/html/head/meta[@name="bitly-verification"]/@content' }
+
+  # Twitter
+  - { name: 'Twitter application ID', selector: '/html/head/meta[@name="twitter:site"]/@content' }
+  - { name: 'Twitter creator ID', selector: '/html/head/meta[@name="twitter:creator"]/@content' }
+  - { name: 'Apple application ID', selector: '/html/head/meta[@name="twitter:app:id:iphone"]/@content' }
+  - { name: 'GooglePlay application ID', selector: '/html/head/meta[@name="twitter:app:id:googleplay"]/@content' }
+
+  # Facebook
+  - { name: 'Facebook application ID', selector: '/html/head/meta[@property="fb:admins"]/@content' }
+
+  # Google
+  - { name: 'Google webmaster tools ID', selector: '/html/head/meta[@name="google-site-verification"]/@content' }
+  -
+    name: 'Google analytics ID'
+    selector: '/html/head/meta[@name="google-analytics"]/@content'
+    regex:
+      - _gaq\s*\.\s*push\s*\(\s*\[\s*['"]_setAccount['"]\s*,\s*['"](.+?)['"]
+      - ga\s*\(\s*['"]create['"]\s*,\s*['"](.+?)['"]
+
+  # Quantcast
+  -
+    name: 'Quantcast ID'
+    regex: _qevents\s*\.\s*push\s*\(\s*\{\s*qacct\s*:\s*['"](.+?)['"]
+
+  # Scorecard Research
+  -
+    name: 'Scorecard Research ID'
+    regex: _comscore\s*\.\s*push\s*\(\s*\{\s*c1\s*:\s*['"].+?['"]\s*,\s*c2\s*:\s*['"](.+?)['"]
 
 files:
-    required:
-        - 'robots.txt'
 
-    removed:
+  required:
 
-        - '.gitignore'
+    # Robots
+    - 'robots.txt'
 
-        - 'LICENSE'
-        - 'LICENSE.md'
-        - 'README.md'
+  removed:
 
-        - 'docker-compose.yml'
-        - 'parameters.yml'
-        - 'settings.yml'
-        - 'config.yml'
+    # Default
+    - { files: ['LICENSE', 'LICENSE.md'] }
+    - { files: ['README', 'README.md'] }
 
-        - 'package.json'
-        - 'bower.json'
-        - 'composer.json'
-        - 'composer.lock'
+    # Settings
+    - { files: ['parameters.yml', 'settings.yml', 'config.yml'] }
 
-        - 'brunch-config.js'
+    # Git
+    - { files: ['.gitignore'] }
 
-        - 'phpunit.xml'
+    # Docker
+    - { files: ['docker-compose.yml'] }
+
+    # Npm
+    - { files: ['package.json'] }
+
+    # Bower
+    - { files: ['bower.json'] }
+
+    # Composer
+    - { files: ['composer.json'], interpreter: { type: json, path: [require], category: php } }
+    - { files: ['composer.lock'] }
+    - { files: ['vendor/composer/installed.json'], interpreter: { type: json, path: [name, version], category: php } }
+
+    # BrunchJs
+    - { files: ['brunch-config.js'] }
+
+    # PhpUnit
+    - { files: ['phpunit.xml'] }

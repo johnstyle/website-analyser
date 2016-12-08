@@ -32,7 +32,7 @@ headers.find(parameters['headers'], request)
 prompt.subtitle('Content')
 content.find(parameters['content'], request)
 
-prompt.subtitle('Files')
-files.find(parameters)
+# prompt.subtitle('Files')
+# files.find(parameters)
 
 print('')

@@ -1,4 +1,4 @@
-resultLength = 30
+resultLength = 35
 
 class colors:
     ENDC = '\033[0m'
