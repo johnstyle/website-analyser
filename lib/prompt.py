@@ -60,3 +60,6 @@ def error( name, value ):
 
 def repeat(string, length):
    return (string * ((length/len(string))+1))[:length]
+
+def separator():
+    print(colors.GRAY + '--------------------------------------------' + colors.ENDC)

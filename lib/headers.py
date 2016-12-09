@@ -6,7 +6,7 @@ def find(parameters, request):
     for header in request.headers:
         headers[header.lower()] = request.headers[header]
 
-    for parameter in parameters['required']:
+    for parameter in parameters['headers']['required']:
         loname = parameter['name'].lower()
         if loname in headers:
             value = headers[loname]
@@ -17,7 +17,7 @@ def find(parameters, request):
         else:
             prompt.error(parameter['name'], None)
 
-    for parameter in parameters['removed']:
+    for parameter in parameters['headers']['removed']:
         loname = parameter['name'].lower()
         if loname in headers:
             value = headers[loname]

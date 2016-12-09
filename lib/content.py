@@ -6,7 +6,7 @@ def find(parameters, request):
 
     tree = html.fromstring(request.content)
 
-    for parameter in parameters:
+    for parameter in parameters['content']:
 
         if 'selector' in parameter:
             values = tree.xpath(parameter['selector'])
@@ -21,4 +21,6 @@ def find(parameters, request):
                 values = re.findall(regex, request.content)
                 if values:
                     for value in values:
-                        prompt.text(parameter['name'], value)
+                        if not isinstance(value, tuple):
+                            value = [value]
+                        prompt.text(parameter['name'], ' ' . join(value))

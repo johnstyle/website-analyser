@@ -3,29 +3,35 @@ headers:
   required:
 
     - { name: 'Content-Security-Policy', values: [] }
-    - { name: 'X-Frame-Options', values: ['SAMEORIGIN', 'DENY'] }
+    - { name: 'X-Frame-Options', values: ['sameorigin', 'deny'] }
     - { name: 'X-XSS-Protection', values: ['1; mode=block'] }
+    - { name: 'X-Content-Type-Options', values: ['nosniff'] }
 
   removed:
 
     - { name: 'ETag' }
     - { name: 'X-Powered-By' }
+    - { name: 'X-Powered-By-Plesk' }
     - { name: 'Server' }
+    - { name: 'Via' }
 
 content:
 
   # Generator
   - { name: 'Generator name', selector: '/html/head/meta[@name="generator"]/@content' }
+  - { name: 'Generator name', selector: '/html/head/meta[@name="author"]/@content' }
+  - { name: 'Generator name', selector: '/html/head/meta[@name="DC.creator"]/@content' }
 
   # Email
   -
     name: 'Email'
     regex: mailto:([^"'\s>]+)
+    selector: '/html/head/meta[@name="reply-to"]/@content'
 
   # Phone
   -
     name: 'Phone'
-    regex: (?:callto|tel):([^"'\s>]+)
+    regex: (?:callto|tel):([^"'>]+)
 
   # Skype
   -
@@ -42,7 +48,8 @@ content:
   - { name: 'GooglePlay application ID', selector: '/html/head/meta[@name="twitter:app:id:googleplay"]/@content' }
 
   # Facebook
-  - { name: 'Facebook application ID', selector: '/html/head/meta[@property="fb:admins"]/@content' }
+  - { name: 'Facebook admins ID', selector: '/html/head/meta[@property="fb:admins"]/@content' }
+  - { name: 'Facebook application ID', selector: '/html/head/meta[@property="fb:app_id"]/@content' }
 
   # Google
   - { name: 'Google webmaster tools ID', selector: '/html/head/meta[@name="google-site-verification"]/@content' }
@@ -53,15 +60,42 @@ content:
       - _gaq\s*\.\s*push\s*\(\s*\[\s*['"]_setAccount['"]\s*,\s*['"](.+?)['"]
       - ga\s*\(\s*['"]create['"]\s*,\s*['"](.+?)['"]
 
-  # Quantcast
+  # quantcast.com
   -
-    name: 'Quantcast ID'
+    name: 'quantcast.com'
     regex: _qevents\s*\.\s*push\s*\(\s*\{\s*qacct\s*:\s*['"](.+?)['"]
 
-  # Scorecard Research
+  # scorecardresearch.com
   -
-    name: 'Scorecard Research ID'
+    name: 'scorecardresearch.com'
     regex: _comscore\s*\.\s*push\s*\(\s*\{\s*c1\s*:\s*['"].+?['"]\s*,\s*c2\s*:\s*['"](.+?)['"]
+
+  # estat.com
+  -
+    name: 'estat.com'
+    regex:
+      - eStat_id\s*\.\s*(serial)\s*\(\s*['"](.+?)['"]
+      - eStat_id\s*\.\s*(master)\s*\(\s*['"](.+?)['"]
+
+admin:
+
+    # Wordpress
+    - { path: ['/wp-login.php'] }
+
+    # Spip
+    - { path: ['/spip.php?page=login'] }
+
+    # Joomla
+    - { path: ['/administrator/'] }
+
+    # Prestashop
+    - { path: ['/admin-dev/'] }
+
+    # Symfony
+    - { path: ['/app_dev.php/'] }
+
+    # Common
+    - { path: ['/admin/', '/admin.php', '/manager/'] }
 
 files:
 
@@ -73,31 +107,31 @@ files:
   removed:
 
     # Default
-    - { files: ['LICENSE', 'LICENSE.md'] }
-    - { files: ['README', 'README.md'] }
+    - { files: ['/LICENSE', '/LICENSE.md', '/license.txt'] }
+    - { files: ['/README', '/README.md', '/readme.html'] }
 
     # Settings
-    - { files: ['parameters.yml', 'settings.yml', 'config.yml'] }
+    - { files: ['/parameters.yml', '/settings.yml', '/config.yml'] }
 
     # Git
-    - { files: ['.gitignore'] }
+    - { files: ['/.gitignore'] }
 
     # Docker
-    - { files: ['docker-compose.yml'] }
+    - { files: ['/docker-compose.yml'] }
 
     # Npm
-    - { files: ['package.json'] }
+    - { files: ['/package.json'] }
 
     # Bower
-    - { files: ['bower.json'] }
+    - { files: ['/bower.json'] }
 
     # Composer
-    - { files: ['composer.json'], interpreter: { type: json, path: [require], category: php } }
-    - { files: ['composer.lock'] }
-    - { files: ['vendor/composer/installed.json'], interpreter: { type: json, path: [name, version], category: php } }
+    - { files: ['/composer.json'], interpreter: { type: json, path: [require], category: php } }
+    - { files: ['/composer.lock'] }
+    - { files: ['/vendor/composer/installed.json'], interpreter: { type: json, path: [name, version], category: php } }
 
     # BrunchJs
-    - { files: ['brunch-config.js'] }
+    - { files: ['/brunch-config.js'] }
 
     # PhpUnit
-    - { files: ['phpunit.xml'] }
+    - { files: ['/phpunit.xml'] }
