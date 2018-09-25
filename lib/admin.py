@@ -3,8 +3,10 @@ import requests
 import hashlib
 import lib.content as content
 
+
 def find(parameters):
 
+    found_data = False
     prompt.text('Scan admin...', '')
     prompt.separator()
 
@@ -14,6 +16,8 @@ def find(parameters):
             if 200 == request.status_code:
                 hash = hashlib.md5(request.content).hexdigest()
                 if hash != parameters['hash']:
-                    prompt.error(path, 'Path exists')
-                    content.find(parameters, request)
-                    prompt.separator()
+                    prompt.error(path if 32 >= len(path) else path[:28] + '[...]', 'Path exists')
+                    found_data = True
+
+    if not found_data:
+        prompt.text(' > No data found', '')

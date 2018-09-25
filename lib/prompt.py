@@ -1,6 +1,7 @@
 resultLength = 35
 
-class colors:
+
+class Colors(object):
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
@@ -21,45 +22,51 @@ class colors:
     BGGRAY = '\033[47m'
 
 
-
-def title( text ):
+def title(text):
     length = len(text)
     print('')
-    print(colors.BGYELLOW + colors.BLACK + repeat(' ', length + 10) + colors.ENDC)
-    print(colors.BGYELLOW + colors.BLACK + repeat(' ', 5) + text + repeat(' ', 5) + colors.ENDC)
-    print(colors.BGYELLOW + colors.BLACK + repeat(' ', length + 10) + colors.ENDC)
+    print(Colors.BGYELLOW + Colors.BLACK + repeat(' ', length + 10) + Colors.ENDC)
+    print(Colors.BGYELLOW + Colors.BLACK + repeat(' ', 5) + text + repeat(' ', 5) + Colors.ENDC)
+    print(Colors.BGYELLOW + Colors.BLACK + repeat(' ', length + 10) + Colors.ENDC)
 
-def subtitle( text ):
+
+def subtitle(text):
     print('')
-    print(colors.YELLOW + colors.BOLD + text + colors.ENDC)
-    print(colors.YELLOW + '--------------------------------------------' + colors.ENDC)
+    print(Colors.YELLOW + Colors.BOLD + text + Colors.ENDC)
+    print(Colors.YELLOW + '--------------------------------------------' + Colors.ENDC)
 
-def text( name, value ):
+
+def text(name, value):
     if value is None:
         value = '-'
     length = resultLength-len(name)
-    print(colors.GRAY + name + repeat(' ', length) + value + colors.ENDC)
+    print(Colors.GRAY + name + repeat(' ', length) + value + Colors.ENDC)
 
-def success( name, value ):
+
+def success(name, value):
     if value is None:
         value = '-'
     length = resultLength-len(name)
-    print(colors.GREEN + name + repeat(' ', length) + value + colors.ENDC)
+    print(Colors.GREEN + name + repeat(' ', length) + value + Colors.ENDC)
 
-def warning( name, value ):
+
+def warning(name, value):
     if value is None:
         value = '-'
     length = resultLength-len(name)
-    print(colors.YELLOW + name + repeat(' ', length) + value + colors.ENDC)
+    print(Colors.YELLOW + name + repeat(' ', length) + value + Colors.ENDC)
 
-def error( name, value ):
+
+def error(name, value):
     if value is None:
         value = '-'
     length = resultLength-len(name)
-    print(colors.RED + name + repeat(' ', length) + value + colors.ENDC)
+    print(Colors.RED + name + repeat(' ', length) + value + Colors.ENDC)
+
 
 def repeat(string, length):
-   return (string * ((length/len(string))+1))[:length]
+    return (string * ((length/len(string))+1))[:length]
+
 
 def separator():
-    print(colors.GRAY + '--------------------------------------------' + colors.ENDC)
+    print(Colors.GRAY + '--------------------------------------------' + Colors.ENDC)

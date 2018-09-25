@@ -6,6 +6,7 @@ import requests
 import yaml
 import hashlib
 import lib.prompt as prompt
+import lib.domain as domain
 import lib.headers as headers
 import lib.content as content
 import lib.admin as admin
@@ -26,9 +27,17 @@ parameters = yaml.load(file(parametersFile, 'r'))
 parameters['url'] = args[0]
 
 prompt.title('Website Analyser : ' + parameters['url'])
-request = requests.get(parameters['url'])
+
+try:
+    request = requests.get(parameters['url'])
+except Exception:
+    print('Cette URL ne repond pas')
+    pass
 
 parameters['hash'] = hashlib.md5(request.content).hexdigest()
+
+prompt.subtitle('Domain')
+domain.find(parameters, request)
 
 prompt.subtitle('Headers')
 headers.find(parameters, request)

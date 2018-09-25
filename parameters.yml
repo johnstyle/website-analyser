@@ -89,13 +89,16 @@ admin:
     - { path: ['/administrator/'] }
 
     # Prestashop
-    - { path: ['/admin-dev/'] }
+    - { path: ['/admin-dev/', '/install-dev/'] }
 
     # Symfony
     - { path: ['/app_dev.php/'] }
 
+    # API
+    - { path: ['/api/'] }
+
     # Common
-    - { path: ['/admin/', '/admin.php', '/manager/'] }
+    - { path: ['/admin/', '/admin.php', '/manager/', '/login/', '/auth/'] }
 
 files:
 
@@ -114,16 +117,17 @@ files:
     - { files: ['/parameters.yml', '/settings.yml', '/config.yml'] }
 
     # Git
-    - { files: ['/.gitignore'] }
+    - { files: ['/.gitignore', '/.git/config'] }
 
     # Docker
     - { files: ['/docker-compose.yml'] }
 
     # Npm
-    - { files: ['/package.json'] }
+    - { files: ['/package.json'], interpreter: { type: json, path: [dependencies], category: javascript } }
+    - { files: ['/package-lock.json'], interpreter: { type: json, path: [dependencies], category: javascript } }
 
     # Bower
-    - { files: ['/bower.json'] }
+    - { files: ['/bower.json'], interpreter: { type: json, path: [dependencies], category: javascript } }
 
     # Composer
     - { files: ['/composer.json'], interpreter: { type: json, path: [require], category: php } }
@@ -133,5 +137,14 @@ files:
     # BrunchJs
     - { files: ['/brunch-config.js'] }
 
+    # GulpJs
+    - { files: ['/gulpfile.js'] }
+
     # PhpUnit
     - { files: ['/phpunit.xml'] }
+
+    # PrestaShop
+    - { files: ['/app/config/parameters.yml', '/app/config/parameters.yml'] }
+
+    # SSH
+    - { files: ['/.ssh/id_rsa', '/.ssh/id_dsa'] }
